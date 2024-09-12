@@ -41,26 +41,27 @@ const sendMessage = async (req,res)=>{
     }
 };
 
-const getMessages = async (req,res)=>{
+const getMessages = async (req, res) => {
     try {
-        const {id : userToChatId} = req.params
+        const { id: userToChatId } = req.params;
         const senderId = req.user._id;
 
         const conversation = await Conversation.findOne({
-            participants : { $all : [senderId , userToChatId]}
+            participants: { $all: [senderId, userToChatId] }
         }).populate("messages");
 
-        if(!conversation){
-            res.status(200).json([]);
+        if (!conversation) {
+            return res.status(200).json([]); // Return early if no conversation is found
         }
 
-        const messages = conversation.messages
-        res.status(200).json(messages)
-        
+        const messages = conversation.messages;
+        return res.status(200).json(messages); // Return early with messages
+
     } catch (error) {
-        console.log("Error getting messages : ",error.message)
-        res.status(500).json({error : "Internal server error"})
+        console.error("Error getting messages:", error); // Improved logging
+        return res.status(500).json({ error: "Internal server error" });
     }
-}
+};
+
 
 export {sendMessage , getMessages}
