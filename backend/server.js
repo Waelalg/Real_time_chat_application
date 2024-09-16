@@ -6,7 +6,7 @@ import cors from "cors"
 import authRoutes from '../backend/routes/authRoutes.js';
 import messageRoutes from '../backend/routes/messageRoutes.js';
 import usersRoutes from '../backend/routes/usersRoutes.js';
-import connectDB from './db/connectToMongoDb.js';
+import connectDB from './db/connectToMongoDB.js';
 import { app,server } from './socket/socket.js';
 
 dotenv.config();
